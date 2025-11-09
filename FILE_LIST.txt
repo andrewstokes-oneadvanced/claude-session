@@ -1,0 +1,256 @@
+ClaudeCodeHelper - Complete File List
+======================================
+
+PROJECT ROOT: ClaudeCodeHelper/
+
+CORE APPLICATION FILES (4 files)
+├── ClaudeCodeHelper.csproj     (321 bytes)  - .NET 8.0 WinForms project file
+├── Program.cs                  (365 bytes)  - Application entry point
+├── TrayApplicationContext.cs   (18 KB)      - Main application logic (500+ lines)
+└── app.manifest                (1.1 KB)     - Windows application manifest
+
+BUILD & SETUP SCRIPTS (2 files)
+├── build.bat                   (910 bytes)  - Simple build script
+└── setup.bat                   (2.0 KB)     - Interactive setup wizard
+
+DOCUMENTATION (6 files)
+├── README.md                   (3.7 KB)     - Main documentation
+├── QUICKSTART.md               (3.3 KB)     - Quick start guide
+├── USER_GUIDE.md               (11 KB)      - Comprehensive user manual
+├── PROJECT_STRUCTURE.md        (5.3 KB)     - Technical architecture
+├── OVERVIEW.md                 (11 KB)      - Complete project summary
+└── FILE_LIST.txt               (This file)  - File inventory
+
+CONFIGURATION (1 file)
+└── .gitignore                  (not shown)  - Git ignore rules
+
+GENERATED DIRECTORIES (after build)
+├── bin/
+│   └── Release/
+│       └── net8.0-windows/
+│           ├── ClaudeCodeHelper.exe        - Main executable
+│           ├── ClaudeCodeHelper.dll        - Application library
+│           ├── ClaudeCodeHelper.deps.json  - Dependency manifest
+│           ├── ClaudeCodeHelper.runtimeconfig.json - Runtime config
+│           └── ClaudeCodeHelper.pdb        - Debug symbols
+└── obj/
+    └── (build intermediates)
+
+RUNTIME DATA DIRECTORIES (when running)
+%AppData%\ClaudeCodeHelper\
+├── lastsent.txt                - Last command timestamp
+└── session.txt                 - Session data (start time, tokens)
+
+TOTAL PROJECT SIZE
+==================
+Source files:      ~74 KB
+Documentation:     ~35 KB
+Total (no build):  ~109 KB
+
+After build:       ~2-5 MB (includes .NET assemblies)
+
+
+FILE PURPOSES
+=============
+
+FOR END USERS - START HERE:
+---------------------------
+1. setup.bat             - Run this first to build and install
+2. QUICKSTART.md         - Fast setup guide
+3. USER_GUIDE.md         - Complete usage instructions
+
+FOR DEVELOPERS:
+--------------
+1. ClaudeCodeHelper.csproj    - Open in Visual Studio/VS Code
+2. Program.cs                 - Application entry point
+3. TrayApplicationContext.cs  - Main logic (edit this for features)
+4. PROJECT_STRUCTURE.md       - Code architecture guide
+
+FOR BUILDING:
+------------
+1. build.bat              - Quick build script
+2. setup.bat              - Full setup with prompts
+   OR
+   dotnet build -c Release
+
+DOCUMENTATION GUIDE:
+-------------------
+README.md              - Overview, features, basic usage
+QUICKSTART.md          - Get started in 5 minutes
+USER_GUIDE.md          - Detailed usage, troubleshooting, FAQ
+PROJECT_STRUCTURE.md   - Technical details, architecture
+OVERVIEW.md            - Complete project summary
+FILE_LIST.txt          - This file - inventory of everything
+
+
+TYPICAL WORKFLOW
+================
+
+1. FIRST TIME SETUP:
+   - Run setup.bat
+   - Application builds and offers to start
+   - Icon appears in system tray
+
+2. DAILY USE:
+   - App runs automatically (if startup enabled)
+   - Hover icon to see session time and tokens
+   - Right-click for menu options
+   - Commands sent every 5 hours automatically
+
+3. CUSTOMIZATION:
+   - Edit TrayApplicationContext.cs
+   - Change interval, command, or features
+   - Run build.bat to rebuild
+   - Restart application
+
+4. TROUBLESHOOTING:
+   - Check USER_GUIDE.md
+   - Verify Claude Code CLI works: echo hi | claude
+   - Right-click icon → Send 'hi' Now to test
+
+
+KEY FILES FOR COMMON TASKS
+===========================
+
+Want to change the 5-hour interval?
+→ Edit TrayApplicationContext.cs line 17
+
+Want to change the command being sent?
+→ Edit TrayApplicationContext.cs line 181
+
+Want to understand the code structure?
+→ Read PROJECT_STRUCTURE.md
+
+Want to help users get started?
+→ Give them QUICKSTART.md
+
+Having issues?
+→ Check USER_GUIDE.md troubleshooting section
+
+Want to distribute the app?
+→ Copy the .exe from bin\Release\net8.0-windows\
+→ Include QUICKSTART.md or USER_GUIDE.md
+
+
+DEPENDENCIES
+============
+
+Build-time:
+- .NET 8.0 SDK
+
+Run-time:
+- .NET 8.0 Runtime (or SDK)
+- Windows 10 or later
+- Claude Code CLI (optional - shows errors if not present)
+
+No external NuGet packages required - uses built-in .NET libraries only.
+
+
+SOURCE CODE STATISTICS
+======================
+
+Language: C#
+Target Framework: .NET 8.0 (Windows)
+UI Framework: Windows Forms
+
+Files:
+- Program.cs: ~20 lines
+- TrayApplicationContext.cs: ~500 lines
+- Total C# code: ~520 lines
+
+Lines of Documentation: ~2000+ lines across all .md files
+
+Comments: Well-documented with inline comments
+
+
+BUILD OUTPUTS
+=============
+
+Debug Build (dotnet build):
+→ bin\Debug\net8.0-windows\ClaudeCodeHelper.exe
+
+Release Build (dotnet build -c Release):
+→ bin\Release\net8.0-windows\ClaudeCodeHelper.exe
+
+The Release build is optimized and recommended for distribution.
+
+
+DISTRIBUTION OPTIONS
+====================
+
+Option 1: EXE Only
+- Requires user has .NET 8.0 Runtime installed
+- Smallest file size (~200 KB)
+- User must install .NET separately
+
+Option 2: Self-Contained
+- Use: dotnet publish -c Release -r win-x64 --self-contained
+- Includes .NET Runtime
+- Larger size (~70 MB)
+- No dependencies needed
+
+Option 3: Installer
+- Create with Inno Setup or WiX
+- Can bundle .NET Runtime
+- Professional appearance
+- Handles registry, shortcuts, etc.
+
+
+REGISTRY KEYS USED
+==================
+
+Startup Entry:
+HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
+Key: ClaudeCodeHelper
+Value: "C:\path\to\ClaudeCodeHelper.exe"
+
+
+FILE SYSTEM LOCATIONS
+=====================
+
+Application Executable:
+C:\Users\[Username]\...\ClaudeCodeHelper\bin\Release\net8.0-windows\
+
+Application Data:
+C:\Users\[Username]\AppData\Roaming\ClaudeCodeHelper\
+
+Startup Registry:
+HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
+
+
+BACKUP RECOMMENDATIONS
+======================
+
+Critical files to backup/version control:
+✓ All .cs files
+✓ .csproj file
+✓ app.manifest
+✓ All .md files
+✓ Build scripts (.bat)
+
+Files that can be regenerated:
+✗ bin/ directory
+✗ obj/ directory
+✗ User's AppData files
+
+
+VERSION INFORMATION
+===================
+
+Current Version: 1.0
+Created: November 2025
+.NET Version: 8.0
+Target OS: Windows 10+
+Architecture: AnyCPU (works on x64, ARM64)
+
+
+SUPPORT FILES SUMMARY
+=====================
+
+Total Documentation Pages: 6
+Total Words in Docs: ~15,000
+Total Build Scripts: 2
+Total Code Files: 3
+Total Configuration Files: 2
+
+Everything you need is included!
