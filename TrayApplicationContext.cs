@@ -864,25 +864,24 @@ namespace ClaudeCodeHelper
             }
 
             string sessionInfo = "";
-            if (_currentSessionStartTime != DateTime.MinValue)
+            if (_nextScheduledSend != DateTime.MinValue)
             {
                 DateTime now = DateTime.Now;
-                DateTime nextMessage = _currentSessionStartTime.Add(_sessionDuration);
-                TimeSpan timeUntilNext = nextMessage - now;
+                TimeSpan timeUntilNext = _nextScheduledSend - now;
                 
                 if (timeUntilNext.TotalSeconds > 0)
                 {
-                    sessionInfo = $"Next message: {FormatDuration(timeUntilNext)}\n" +
-                                 $"Session started: {_currentSessionStartTime:yyyy-MM-dd HH:mm:ss}\n";
+                    sessionInfo = $"Next message: {FormatDuration(timeUntilNext)} ({_nextScheduledSend:yyyy-MM-dd HH:mm})\n" +
+                                 $"Session started: {(_currentSessionStartTime != DateTime.MinValue ? _currentSessionStartTime.ToString("yyyy-MM-dd HH:mm:ss") : "Not started")}\n";
                 }
                 else
                 {
-                    sessionInfo = "Next message: Very soon\n";
+                    sessionInfo = "Next message: Due now\n";
                 }
             }
             else
             {
-                sessionInfo = "First message: On startup\n";
+                sessionInfo = "Next message: Not scheduled\n";
             }
 
             MessageBox.Show(
