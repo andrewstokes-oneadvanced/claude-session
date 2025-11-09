@@ -11,7 +11,7 @@ A comprehensive .NET Windows application that automatically maintains active Cla
 - **🖥️ CLI Window Management**: Launch and manage multiple Claude CLI windows automatically
 
 ### **User Interface**
-- **🥷 System Tray Application**: Runs quietly in the background with a ninja-themed icon
+- **📱 System Tray Application**: Runs quietly in the background with a custom icon
 - **📊 Real-time Status**: Hover tooltips show next send time, current message, and last activity
 - **🎛️ Rich Context Menu**: Comprehensive right-click menu with helpful tooltips for all options
 - **🎨 Organized Layout**: Clean, intuitive configuration dialogs with proper spacing

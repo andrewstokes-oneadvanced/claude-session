@@ -80,7 +80,7 @@ namespace ClaudeCodeHelper
                 Icon = CreateNinjaIcon(),
                 ContextMenuStrip = CreateContextMenu(),
                 Visible = true,
-                Text = "Claude Code Helper"
+                Text = "Claude CLI Session Manager"
             };
 
             _trayIcon.DoubleClick += OnTrayIconDoubleClick;
@@ -119,7 +119,7 @@ namespace ClaudeCodeHelper
         {
             try
             {
-                // Create a 32x32 bitmap for the ninja icon
+                // Create a 32x32 bitmap for the icon (standard system tray size)
                 using (Bitmap bitmap = new Bitmap(32, 32))
                 using (Graphics g = Graphics.FromImage(bitmap))
                 {
@@ -129,48 +129,48 @@ namespace ClaudeCodeHelper
                     // Anti-aliasing for smoother edges
                     g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
                     
-                    // Ninja colors
-                    Color ninjaBlack = Color.FromArgb(255, 32, 32, 32);
-                    Color ninjaGray = Color.FromArgb(255, 80, 80, 80);
-                    Color eyeColor = Color.FromArgb(255, 255, 255, 255);
-                    Color redAccent = Color.FromArgb(255, 200, 50, 50);
+                    // Enhanced colors for better visibility
+                    Color darkBlue = Color.FromArgb(255, 25, 25, 112);     // Dark blue for head
+                    Color lightBlue = Color.FromArgb(255, 70, 130, 180);  // Steel blue for outline
+                    Color brightWhite = Color.FromArgb(255, 255, 255, 255); // Bright white for eyes
+                    Color brightRed = Color.FromArgb(255, 255, 69, 0);     // Red accent
                     
-                    // Draw ninja head (circle)
-                    using (SolidBrush headBrush = new SolidBrush(ninjaBlack))
+                    // Draw main head (larger and more visible)
+                    using (SolidBrush headBrush = new SolidBrush(darkBlue))
                     {
-                        g.FillEllipse(headBrush, 4, 6, 24, 24);
+                        g.FillEllipse(headBrush, 2, 4, 28, 28);
                     }
                     
-                    // Draw ninja mask/hood outline
-                    using (Pen outlinePen = new Pen(ninjaGray, 2))
+                    // Draw outline for better definition
+                    using (Pen outlinePen = new Pen(lightBlue, 2))
                     {
-                        g.DrawEllipse(outlinePen, 4, 6, 24, 24);
+                        g.DrawEllipse(outlinePen, 2, 4, 28, 28);
                     }
                     
-                    // Draw eyes (two small white ellipses)
-                    using (SolidBrush eyeBrush = new SolidBrush(eyeColor))
+                    // Draw larger, more visible eyes
+                    using (SolidBrush eyeBrush = new SolidBrush(brightWhite))
                     {
-                        g.FillEllipse(eyeBrush, 10, 14, 4, 3); // Left eye
-                        g.FillEllipse(eyeBrush, 18, 14, 4, 3); // Right eye
+                        g.FillEllipse(eyeBrush, 8, 12, 6, 4); // Left eye (larger)
+                        g.FillEllipse(eyeBrush, 18, 12, 6, 4); // Right eye (larger)
                     }
                     
-                    // Draw a small red ninja mark (forehead)
-                    using (SolidBrush accentBrush = new SolidBrush(redAccent))
+                    // Draw a distinctive red accent mark
+                    using (SolidBrush accentBrush = new SolidBrush(brightRed))
                     {
-                        g.FillEllipse(accentBrush, 15, 10, 2, 2);
+                        g.FillEllipse(accentBrush, 14, 8, 4, 4);
                     }
                     
-                    // Draw ninja mask band across eyes
-                    using (SolidBrush maskBrush = new SolidBrush(ninjaGray))
+                    // Draw mask band with better contrast
+                    using (SolidBrush maskBrush = new SolidBrush(lightBlue))
                     {
-                        g.FillRectangle(maskBrush, 6, 15, 20, 4);
+                        g.FillRectangle(maskBrush, 4, 14, 24, 6);
                     }
                     
-                    // Redraw eye holes
-                    using (SolidBrush eyeBrush = new SolidBrush(eyeColor))
+                    // Redraw eye holes for mask effect
+                    using (SolidBrush eyeBrush = new SolidBrush(brightWhite))
                     {
-                        g.FillEllipse(eyeBrush, 10, 16, 3, 2); // Left eye hole
-                        g.FillEllipse(eyeBrush, 19, 16, 3, 2); // Right eye hole
+                        g.FillEllipse(eyeBrush, 9, 15, 4, 3); // Left eye hole
+                        g.FillEllipse(eyeBrush, 19, 15, 4, 3); // Right eye hole
                     }
                     
                     // Create icon from bitmap
@@ -346,7 +346,7 @@ namespace ClaudeCodeHelper
             {
                 if (_trayIcon != null)
                 {
-                    string tooltipText = "🥷 Claude CLI Session Manager";
+                    string tooltipText = "Claude CLI Session Manager";
 
                     // Show next send time if scheduled
                     if (_nextScheduledSend != DateTime.MinValue)
@@ -886,7 +886,7 @@ namespace ClaudeCodeHelper
             }
 
             MessageBox.Show(
-                $"🥷 Claude CLI Session Manager\n\n" +
+                $"Claude CLI Session Manager\n\n" +
                 $"Automatically sends messages to Claude CLI windows at configured intervals.\n" +
                 $"Helps maintain active Claude sessions for maximum productivity.\n\n" +
                 sessionInfo +
