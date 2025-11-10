@@ -551,10 +551,37 @@ namespace ClaudeCodeHelper
                 // Try to send to existing manual CLI windows
                 bool success = await SendMessageToManualWindows(_messageToSend);
 
-                // Store the response
-                _lastResponse = success ? 
-                    $"Message '{_messageToSend}' sent to {FindClaudeCliWindows().Count} CLI window(s) at {DateTime.Now:HH:mm:ss}" :
-                    $"No Claude CLI windows found to send message to at {DateTime.Now:HH:mm:ss}";
+                // If no CLI windows found and CLI command is configured, launch a new one
+                if (!success && !string.IsNullOrEmpty(_claudeCliCommand))
+                {
+                    _lastResponse = $"No Claude CLI windows found. Launching new CLI window at {DateTime.Now:HH:mm:ss}";
+                    LaunchClaudeCliWindow();
+                    
+                    // Wait a moment for the CLI to start, then try to send the message
+                    await Task.Delay(3000); // Wait 3 seconds for CLI to initialize
+                    success = await SendMessageToManualWindows(_messageToSend);
+                    
+                    if (success)
+                    {
+                        _lastResponse = $"New CLI launched and message '{_messageToSend}' sent at {DateTime.Now:HH:mm:ss}";
+                    }
+                    else
+                    {
+                        _lastResponse = $"New CLI launched but failed to send message '{_messageToSend}' at {DateTime.Now:HH:mm:ss}";
+                    }
+                }
+                else if (!success)
+                {
+                    // Store the response for no windows found case
+                    _lastResponse = string.IsNullOrEmpty(_claudeCliCommand) ? 
+                        $"No Claude CLI configured and no windows found at {DateTime.Now:HH:mm:ss}" :
+                        $"No Claude CLI windows found to send message to at {DateTime.Now:HH:mm:ss}";
+                }
+                else
+                {
+                    // Store the response for successful send
+                    _lastResponse = $"Message '{_messageToSend}' sent to {FindClaudeCliWindows().Count} CLI window(s) at {DateTime.Now:HH:mm:ss}";
+                }
                 _lastCommandSuccessful = success;
 
                 _lastSentTime = DateTime.Now;
@@ -564,11 +591,27 @@ namespace ClaudeCodeHelper
                 // Schedule the next send automatically using the configured duration
                 ScheduleNextSend();
 
-                // Show notification
-                string statusText = success ? "Success" : "No Windows Found";
-                ToolTipIcon statusIcon = success ? ToolTipIcon.Info : ToolTipIcon.Warning;
+                // Show notification with appropriate status
+                string statusText;
+                ToolTipIcon statusIcon;
                 
-                _trayIcon.ShowBalloonTip(3000, $"Message Sent - {statusText}",
+                if (success)
+                {
+                    statusText = "Success";
+                    statusIcon = ToolTipIcon.Info;
+                }
+                else if (string.IsNullOrEmpty(_claudeCliCommand))
+                {
+                    statusText = "CLI Not Configured";
+                    statusIcon = ToolTipIcon.Warning;
+                }
+                else
+                {
+                    statusText = "CLI Launch Attempted";
+                    statusIcon = ToolTipIcon.Warning;
+                }
+                
+                _trayIcon.ShowBalloonTip(4000, $"Message Send - {statusText}",
                     _lastResponse,
                     statusIcon);
 
@@ -887,6 +930,7 @@ namespace ClaudeCodeHelper
             MessageBox.Show(
                 $"Claude CLI Session Manager\n\n" +
                 $"Automatically sends messages to Claude CLI windows at configured intervals.\n" +
+                $"If no CLI windows are found, a new one will be launched automatically.\n" +
                 $"Helps maintain active Claude sessions for maximum productivity.\n\n" +
                 sessionInfo +
                 statusInfo +
